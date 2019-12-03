@@ -1,15 +1,15 @@
 import Vue from 'vue';
-import VueIp from './src/VueIp.vue';
+import VueIpCidr from './src/VueIpCidr.vue';
 
 new Vue({
     el: '#app',
     components: {
-        VueIp
+        VueIpCidr
     },
     data() {
         return {
             ip: '',
-            port: false,
+            netmask: false,
             valid: null,
             theme: 'material'
         };
@@ -32,22 +32,22 @@ new Vue({
         /**
          * Triggers on change
          */
-        ipChange(ip, port, valid) {
+        ipChange(ip, netmask, valid) {
             this.ip = ip;
-            this.port = port;
+            this.netmask = netmask;
             this.valid = valid;
         },
 
         /**
          * Trigger a random ip and port change
          */
-        changeIp(port) {
+        changeIp(netmask) {
             this.ip = this.random() + '.' + this.random() + '.' + this.random() + '.' + this.random();
 
-            if(port)
-                this.port = '' + this.random(1, 9) + this.random(1, 9) + this.random(1, 9) + this.random(1, 9);
+            if(netmask)
+                this.netmask = '' + this.random(1, 32);
             else
-                this.port = false;
+                this.netmask = false;
         },
 
         /**
@@ -68,7 +68,7 @@ new Vue({
         reset() {
 
             this.ip = '';
-            this.port = false;
+            this.netmask = false;
             this.valid = null;
             this.theme = 'material'
 
