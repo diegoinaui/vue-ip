@@ -1,9 +1,9 @@
 {
-  "name": "vue-ip",
+  "name": "vue-ip-cidr",
   "version": "2.0.1",
-  "main": "./dist/vue-ip.min.js",
-  "repository": "https://github.com/peteringram0/vue-ip",
-  "author": "Peter Ingram <peter.ingram0@gmail.com>",
+  "main": "./dist/vue-ip-cidr.min.js",
+  "repository": "https://github.com/diegoinaui/vue-ip-cidr",
+  "author": "Diego Inaui <diegoinaui@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --watch --progress --open --config webpack.dev.config.js  --open-page /index-dev.html",
