@@ -17,7 +17,7 @@ import VueIpCidr from 'VueIpCidr';
 
 new Vue({
     components: {
-        VueIp
+        VueIpCidr
     },
     data() {
         return {
