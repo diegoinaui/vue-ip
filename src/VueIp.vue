@@ -282,7 +282,7 @@
                         break
                 }
 
-            },
+            },W
 
             /**
              * Netmask keydown event
