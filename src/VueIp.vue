@@ -1,449 +1,443 @@
-! function (e, t) {
-    "object" == typeof exports && "object" == typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define([], t) : "object" == typeof exports ? exports.VueIp = t() : e.VueIp = t()
-}(window, (function () {
-    return function (e) {
-        var t = {};
+<template lang="pug">
+    span.vue-ip(:class="{'show-netmask' : netmaskCopy !== false, 'material-theme': theme === 'material', 'active': active, 'valid': valid}")
+        .label
+            slot
+        .segment(v-for="(segment, index) in ipCopy")
+            input(type="number", v-model="ipCopy[index]", :placeholder="placeholderPos(index)", maxlength="3", @paste="paste($event)", @keydown="ipKeydown($event, index)", @focus="ipFocus(index)", @blur="blur", ref="ipSegment")
+        input(type="number", v-show="netmaskCopy !== false", v-model="netmaskCopy", :placeholder="((placeholder) ? '8080' : '')", @paste="paste($event)", @focus="netmaskFocus", @keydown="netmaskKeydown", @blur="blur", ref="netmaskSegment").netmask
+</template>
 
-        function n(i) {
-            if (t[i]) return t[i].exports;
-            var o = t[i] = {
-                i: i,
-                l: !1,
-                exports: {}
-            };
-            return e[i].call(o.exports, o, o.exports, n), o.l = !0, o.exports
-        }
-        return n.m = e, n.c = t, n.d = function (e, t, i) {
-            n.o(e, t) || Object.defineProperty(e, t, {
-                enumerable: !0,
-                get: i
-            })
-        }, n.r = function (e) {
-            "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
-                value: "Module"
-            }), Object.defineProperty(e, "__esModule", {
-                value: !0
-            })
-        }, n.t = function (e, t) {
-            if (1 & t && (e = n(e)), 8 & t) return e;
-            if (4 & t && "object" == typeof e && e && e.__esModule) return e;
-            var i = Object.create(null);
-            if (n.r(i), Object.defineProperty(i, "default", {
-                    enumerable: !0,
-                    value: e
-                }), 2 & t && "string" != typeof e)
-                for (var o in e) n.d(i, o, function (t) {
-                    return e[t]
-                }.bind(null, o));
-            return i
-        }, n.n = function (e) {
-            var t = e && e.__esModule ? function () {
-                return e.default
-            } : function () {
-                return e
-            };
-            return n.d(t, "a", t), t
-        }, n.o = function (e, t) {
-            return Object.prototype.hasOwnProperty.call(e, t)
-        }, n.p = "", n(n.s = 1)
-    }([function (e, t, n) {
-        var i = n(3);
-        "string" == typeof i && (i = [
-            [e.i, i, ""]
-        ]), i.locals && (e.exports = i.locals);
-        (0, n(6).default)("43f08fd6", i, !1, {})
-    }, function (e, t, n) {
-        const i = n(5).default;
-        e.exports = i
-    }, function (e, t, n) {
-        "use strict";
-        var i = n(0);
-        n.n(i).a
-    }, function (e, t, n) {
-        (e.exports = n(4)(!1)).push([e.i, ".vue-ip[data-v-042676a4] {\n  position: relative;\n  display: inline-block;\n  text-align: left;\n}\n.vue-ip.material-theme[data-v-042676a4] {\n  transition: all 0.15s ease-in-out;\n  border-bottom: 1px solid rgba(250,250,250,0.6);\n  padding: 6px;\n}\n.vue-ip.material-theme .label[data-v-042676a4] {\n  display: block;\n  transition: all 0.15s ease-in-out;\n  position: absolute;\n  width: 100%;\n  font-size: 0.6rem;\n  top: -20px;\n  color: rgba(250,250,250,0.6);\n}\n.vue-ip.material-theme .segment[data-v-042676a4]:after {\n  color: #e0e0e0;\n}\n.vue-ip.material-theme.active.valid.material-theme[data-v-042676a4] {\n  border-bottom-color: #409eff;\n}\n.vue-ip.material-theme.active.valid.material-theme .segment[data-v-042676a4]:after {\n  color: #409eff;\n}\n.vue-ip.material-theme.active.valid.material-theme .label[data-v-042676a4] {\n  color: #409eff;\n}\n.vue-ip.material-theme.active:not(.valid).material-theme[data-v-042676a4] {\n  border-bottom-color: #f25d59;\n}\n.vue-ip.material-theme.active:not(.valid).material-theme .segment[data-v-042676a4]:after {\n  color: #f25d59;\n}\n.vue-ip.material-theme.active:not(.valid).material-theme .label[data-v-042676a4] {\n  color: #f25d59;\n}\n.vue-ip.material-theme input[data-v-042676a4] {\n  background: transparent;\n  font-size: inherit;\n  color: #e0e0e0;\n  -moz-appearance: textfield;\n}\n.vue-ip.material-theme input[data-v-042676a4]::-webkit-outer-spin-button,\n.vue-ip.material-theme input[data-v-042676a4]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n.vue-ip.material-theme input[data-v-042676a4]::placeholder {\n  color: rgba(224,224,224,0.3);\n}\n.vue-ip .label[data-v-042676a4] {\n  display: none;\n}\n.vue-ip.show-netmask .segment[data-v-042676a4]:last-of-type:after {\n  content: ':';\n}\n.vue-ip .segment[data-v-042676a4] {\n  display: inline-block;\n}\n.vue-ip .segment[data-v-042676a4]:not(:last-of-type):after {\n  content: '.';\n  display: inline-block;\n}\n.vue-ip input[data-v-042676a4] {\n  text-align: center;\n  width: 40px;\n  outline: none;\n  border: none;\n}\n.vue-ip inputz[data-v-042676a4] {\n  width: 60px;\n}\n", ""])
-    }, function (e, t, n) {
-        "use strict";
-        e.exports = function (e) {
-            var t = [];
-            return t.toString = function () {
-                return this.map((function (t) {
-                    var n = function (e, t) {
-                        var n = e[1] || "",
-                            i = e[3];
-                        if (!i) return n;
-                        if (t && "function" == typeof btoa) {
-                            var o = (a = i, "/*# sourceMappingURL=data:application/json;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(a)))) + " */"),
-                                r = i.sources.map((function (e) {
-                                    return "/*# sourceURL=" + i.sourceRoot + e + " */"
-                                }));
-                            return [n].concat(r).concat([o]).join("\n")
-                        }
-                        var a;
-                        return [n].join("\n")
-                    }(t, e);
-                    return t[2] ? "@media " + t[2] + "{" + n + "}" : n
-                })).join("")
-            }, t.i = function (e, n) {
-                "string" == typeof e && (e = [
-                    [null, e, ""]
-                ]);
-                for (var i = {}, o = 0; o < this.length; o++) {
-                    var r = this[o][0];
-                    null != r && (i[r] = !0)
-                }
-                for (o = 0; o < e.length; o++) {
-                    var a = e[o];
-                    null != a[0] && i[a[0]] || (n && !a[2] ? a[2] = n : n && (a[2] = "(" + a[2] + ") and (" + n + ")"), t.push(a))
-                }
-            }, t
-        }
-    }, function (e, t, n) {
-        "use strict";
-        n.r(t);
-        var i = function () {
-            var e = this,
-                t = e.$createElement,
-                n = e._self._c || t;
-            return n("span", {
-                staticClass: "vue-ip",
-                class: {
-                    "show-netmask": !1 !== e.netmaskCopy, "material-theme": "material" === e.theme, active: e.active, valid: e.valid
-                }
-            }, [n("div", {
-                staticClass: "label"
-            }, [e._t("default")], 2), e._l(e.ipCopy, (function (t, i) {
-                return n("div", {
-                    staticClass: "segment"
-                }, [n("input", {
-                    directives: [{
-                        name: "model",
-                        rawName: "v-model",
-                        value: e.ipCopy[i],
-                        expression: "ipCopy[index]"
-                    }],
-                    ref: "ipSegment",
-                    refInFor: !0,
-                    attrs: {
-                        type: "number",
-                        placeholder: e.placeholderPos(i),
-                        maxlength: "3"
-                    },
-                    domProps: {
-                        value: e.ipCopy[i]
-                    },
-                    on: {
-                        paste: function (t) {
-                            return e.paste(t)
-                        },
-                        keydown: function (t) {
-                            return e.ipKeydown(t, i)
-                        },
-                        focus: function (t) {
-                            return e.ipFocus(i)
-                        },
-                        blur: e.blur,
-                        input: function (t) {
-                            t.target.composing || e.$set(e.ipCopy, i, t.target.value)
-                        }
-                    }
-                })])
-            })), n("input", {
-                directives: [{
-                    name: "show",
-                    rawName: "v-show",
-                    value: !1 !== e.netmaskCopy,
-                    expression: "netmaskCopy !== false"
-                }, {
-                    name: "model",
-                    rawName: "v-model",
-                    value: e.netmaskCopy,
-                    expression: "netmaskCopy"
-                }],
-                ref: "netmaskSegment",
-                staticClass: "netmask",
-                attrs: {
-                    type: "number",
-                    placeholder: e.placeholder ? "8080" : ""
-                },
-                domProps: {
-                    value: e.netmaskCopy
-                },
-                on: {
-                    paste: function (t) {
-                        return e.paste(t)
-                    },
-                    focus: e.netmaskFocus,
-                    keydown: e.netmaskKeydown,
-                    blur: e.blur,
-                    input: function (t) {
-                        t.target.composing || (e.netmaskCopy = t.target.value)
-                    }
-                }
-            })], 2)
-        };
-        i._withStripped = !0;
-        var o = {
-            props: {
-                onChange: Function,
-                ip: {
-                    required: !0,
-                    type: String
-                },
-                netmask: {
-                    type: [String, Number, Boolean],
-                    default: !1
-                },
-                placeholder: {
-                    type: [Boolean],
-                    default: !1
-                },
-                theme: {
-                    type: [String, Boolean],
-                    default: !1
-                }
+<style lang="stylus" scoped>
+    $ip-material-valid := #409EFF
+    $ip-material-in-valid := #f25d59
+
+    $ip-material-color := #e0e0e0
+    $ip-material-color-mute := rgba(250,250,250,0.6);
+    $ip-material-fontSize := inherit
+
+    $ip-transition-speed := .15s
+
+    .vue-ip
+        position relative
+        display inline-block
+        text-align left
+
+        &.material-theme
+            transition all $ip-transition-speed ease-in-out
+            border-bottom 1px solid $ip-material-color-mute
+            padding 6px
+
+            .label
+                display block
+                transition all $ip-transition-speed ease-in-out
+                position absolute
+                width 100%
+                font-size .6rem
+                top -20px
+                color $ip-material-color-mute
+
+            .segment
+                &:after
+                    color $ip-material-color
+
+            &.active
+                &.valid
+                    &.material-theme
+                        border-bottom-color $ip-material-valid
+
+                        .segment
+                            &:after
+                                color $ip-material-valid
+
+                        .label
+                            color $ip-material-valid
+
+                &:not(.valid)
+                    &.material-theme
+                        border-bottom-color $ip-material-in-valid
+
+                        .segment
+                            &:after
+                                color $ip-material-in-valid
+
+                        .label
+                            color $ip-material-in-valid
+
+            input
+                background transparent
+                font-size $ip-material-fontSize
+                color $ip-material-color
+
+                // Hide spinner on MOZ
+                -moz-appearance: textfield
+
+                &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+                    -webkit-appearance none
+                // Hide spinner on chrome
+
+                &::placeholder
+                    color rgba($ip-material-color, .3)
+
+        .label
+            display none
+
+        &.show-netmask
+            .segment
+                &:last-of-type
+                    &:after
+                        content ':'
+
+        .segment
+            display inline-block
+
+            &:not(:last-of-type)
+                &:after
+                    content '.'
+                    display inline-block
+
+        input
+            text-align center
+            width 40px
+            outline none
+            border none
+
+            &.netmask
+                width 60px
+
+</style>
+
+<script>
+    export default {
+        props: {
+            onChange: Function,
+            ip: {
+                required: true,
+                type: String
             },
-            data: () => ({
-                ipCopy: ["", "", "", ""],
+            netmask: {
+                type: [String, Number, Boolean],
+                default: false
+            },
+            placeholder: {
+                type: [Boolean],
+                default: false
+            },
+            theme: {
+                type: [String, Boolean],
+                default: false
+            }
+        },
+        data() {
+            return {
+                ipCopy: ['', '', '', ''],
                 netmaskCopy: null,
-                valid: !1,
-                active: !1
-            }),
-            beforeMount() {
-                this.copyValue(this.ip, this.netmask)
+                valid: false,
+                active: false
+            }
+        },
+        beforeMount() {
+
+            // Copy the values over
+            this.copyValue(this.ip, this.netmask);
+
+        },
+        watch: {
+
+            /**
+             * Watch the IP prop for changes and update internally
+             */
+            ip(newIp) {
+                this.copyValue(newIp, this.netmask);
             },
-            watch: {
-                ip(e) {
-                    this.copyValue(e, this.netmask)
-                },
-                netmask(e) {
-                    this.copyValue(this.ip, e)
+
+            /**
+             * Watch the netmask for changes and update internally
+             */
+            netmask(newNetmask) {
+                this.copyValue(this.ip, newNetmask);
+            }
+
+        },
+        methods: {
+
+            /**
+             * Placeholder with dummy IP
+             */
+            placeholderPos(segment) {
+
+                // No placeholder
+                if (!this.placeholder)
+                    return '';
+
+                // Dummy IP placeholder
+                switch (segment) {
+                    case 0:
+                        return '192';
+                    case 1:
+                        return '168';
+                    case 2:
+                        return '0';
+                    case 3:
+                        return '1';
                 }
+
             },
-            methods: {
-                placeholderPos(e) {
-                    if (!this.placeholder) return "";
-                    switch (e) {
-                        case 0:
-                            return "192";
-                        case 1:
-                            return "168";
-                        case 2:
-                            return "0";
-                        case 3:
-                            return "1"
-                    }
-                },
-                ipFocus(e) {
-                    this.active = !0, this.ipCopy[e] = "", this.changed()
-                },
-                clearAll() {
-                    this.ipCopy = ["", "", "", ""], this.netmaskCopy = null, this.valid = !1
-                },
-                blur() {
-                    this.active = !1
-                },
-                netmaskFocus() {
-                    this.active = !0, this.netmaskCopy = null, this.changed()
-                },
-                paste(e) {
-                    this.$refs.ipSegment[0].focus();
-                    let t = e.clipboardData.getData("text/plain"),
-                        n = t.indexOf(":");
-                    if (!1 === this.netmask) {
-                        console.warn("A IP address with a netmask has been entered but this module has no netmask attribute. Please enable it update the netmask."), this.clearAll();
-                        let e = t.split(":");
-                        return this.copyValue(e[0], !1), void this.$refs.ipSegment[0].blur()
-                    }
-                    switch (n) {
-                        case -1:
-                            this.copyValue(t, null), this.changed(), this.$refs.ipSegment[0].blur();
-                            break;
-                        default:
-                            let e = t.split(":");
-                            this.copyValue(e[0], e[1]), this.changed(), this.$refs.ipSegment[0].blur()
-                    }
-                },
-                netmaskKeydown() {
-                    let e = event.keyCode || event.which;
-                    8 !== e && 37 !== e || this.netmaskCopy && 0 === this.netmaskCopy.length && void 0 !== this.netmaskCopy && this.$refs.ipSegment[3].focus(), setTimeout(this.changed)
-                },
-                ipKeydown(e, t) {
-                    let n = e.keyCode || e.which;
-                    8 === n || 37 === n ? 0 === this.ipCopy[t].length && void 0 !== this.ipCopy[t - 1] && this.$refs.ipSegment[t - 1].focus() : 186 === n && this.$refs.netmaskSegment.focus(), setTimeout(() => {
-                        "0" === this.ipCopy[t] ? this.moveToNextIpSegment(t, !1) : this.moveToNextIpSegment(t), this.changed()
-                    })
-                },
-                moveToNextIpSegment(e, t = !0) {
-                    t ? this.ipCopy[e].length >= 3 && void 0 !== this.ipCopy[e + 1] ? this.$refs.ipSegment[e + 1].focus() : this.ipCopy[e].length >= 3 && void 0 === this.ipCopy[e + 1] && this.$refs.netmaskSegment.focus() : t || (void 0 !== this.ipCopy[e + 1] ? this.$refs.ipSegment[e + 1].focus() : void 0 === this.ipCopy[e + 1] && this.$refs.netmaskSegment.focus())
-                },
-                changed(e = this.ipCopy, t = this.netmaskCopy) {
-                    let n = this.arrayToIp(e);
-                    this.onChange(n, t, this.validateIP(e))
-                },
-                copyValue(e, t) {
-                    e && this.ipToArray(e), this.netmaskCopy = t, this.valid = this.validateIP(this.ipCopy), this.changed()
-                },
-                ipToArray(e) {
-                    let t = [];
-                    e.split(".").map(e => {
-                        (isNaN(e) || e < 0 || e > 255) && (e = 255), t.push(e)
-                    }), 4 !== t.length ? (console.error("Not valid, so clearing ip", t), this.clearAll()) : this.ipCopy = t
-                },
-                arrayToIp: e => e.join("."),
-                validateIP(e) {
-                    let t = this.arrayToIp(e);
-                    return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(t)
+
+            /**
+             * On focus clear the current box
+             */
+            ipFocus(index) {
+
+                this.active = true;
+
+                // Clear it
+                this.ipCopy[index] = '';
+
+                // Update the change
+                this.changed();
+
+            },
+
+            /**
+             * Clear both inputs
+             */
+            clearAll() {
+                this.ipCopy = ['', '', '', ''];
+                this.netmaskCopy = null;
+                this.valid = false;
+            },
+
+            /**
+             * Clicked off the IP or netmask
+             */
+            blur() {
+
+                this.active = false;
+
+            },
+
+            /**
+             * Focus on the netmask
+             */
+            netmaskFocus() {
+
+                this.active = true;
+
+                // Clear it
+                this.netmaskCopy = null;
+
+                // Update the change
+                this.changed();
+
+            },
+
+            /**
+             * Paste in an IP (with or without a netmask)
+             */
+            paste(event) {
+
+                // Focus on first el
+                this.$refs.ipSegment[0].focus();
+
+                // Get clipboard text
+                let pasteText = event.clipboardData.getData('text/plain');
+
+                // Check if we have a netmask or not
+                let netmaskPos = pasteText.indexOf(':');
+
+                // If we have netmasks turned off, remove the netmask and only update the IP value
+                if (this.netmask === false) {
+
+                    console.warn('A IP address with a netmask has been entered but this module has no netmask attribute. Please enable it update the netmask.');
+
+                    this.clearAll();
+
+                    let ipAndNetmask = pasteText.split(":");
+                    this.copyValue(ipAndNetmask[0], false);
+
+                    // Blur off input
+                    this.$refs.ipSegment[0].blur();
+
+                    return;
                 }
-            }
-        };
-        n(2);
-        var r = function (e, t, n, i, o, r, a, s) {
-            var p, l = "function" == typeof e ? e.options : e;
-            if (t && (l.render = t, l.staticRenderFns = n, l._compiled = !0), i && (l.functional = !0), r && (l._scopeId = "data-v-" + r), a ? (p = function (e) {
-                    (e = e || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) || "undefined" == typeof __VUE_SSR_CONTEXT__ || (e = __VUE_SSR_CONTEXT__), o && o.call(this, e), e && e._registeredComponents && e._registeredComponents.add(a)
-                }, l._ssrRegister = p) : o && (p = s ? function () {
-                    o.call(this, this.$root.$options.shadowRoot)
-                } : o), p)
-                if (l.functional) {
-                    l._injectStyles = p;
-                    var u = l.render;
-                    l.render = function (e, t) {
-                        return p.call(t), u(e, t)
-                    }
-                } else {
-                    var c = l.beforeCreate;
-                    l.beforeCreate = c ? [].concat(c, p) : [p]
-                } return {
-                exports: e,
-                options: l
-            }
-        }(o, i, [], !1, null, "042676a4", null);
-        r.options.__file = "src/VueIp.vue";
-        t.default = r.exports
-    }, function (e, t, n) {
-        "use strict";
 
-        function i(e, t) {
-            for (var n = [], i = {}, o = 0; o < t.length; o++) {
-                var r = t[o],
-                    a = r[0],
-                    s = {
-                        id: e + ":" + o,
-                        css: r[1],
-                        media: r[2],
-                        sourceMap: r[3]
-                    };
-                i[a] ? i[a].parts.push(s) : n.push(i[a] = {
-                    id: a,
-                    parts: [s]
-                })
-            }
-            return n
-        }
-        n.r(t), n.d(t, "default", (function () {
-            return h
-        }));
-        var o = "undefined" != typeof document;
-        if ("undefined" != typeof DEBUG && DEBUG && !o) throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");
-        var r = {},
-            a = o && (document.head || document.getElementsByTagName("head")[0]),
-            s = null,
-            p = 0,
-            l = !1,
-            u = function () {},
-            c = null,
-            d = "data-vue-ssr-id",
-            f = "undefined" != typeof navigator && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase());
+                // Based on if we have a netmask or not
+                switch (netmaskPos) {
+                    case -1:
+                        this.copyValue(pasteText, null);
+                        this.changed();
 
-        function h(e, t, n, o) {
-            l = n, c = o || {};
-            var a = i(e, t);
-            return v(a),
-                function (t) {
-                    for (var n = [], o = 0; o < a.length; o++) {
-                        var s = a[o];
-                        (p = r[s.id]).refs--, n.push(p)
-                    }
-                    t ? v(a = i(e, t)) : a = [];
-                    for (o = 0; o < n.length; o++) {
-                        var p;
-                        if (0 === (p = n[o]).refs) {
-                            for (var l = 0; l < p.parts.length; l++) p.parts[l]();
-                            delete r[p.id]
-                        }
-                    }
+                        // Blur off input
+                        this.$refs.ipSegment[0].blur();
+
+                        break;
+                    default:
+                        let ipAndNetmask = pasteText.split(":");
+                        this.copyValue(ipAndNetmask[0], ipAndNetmask[1]);
+                        this.changed();
+
+                        // Blur off input
+                        this.$refs.ipSegment[0].blur();
+
+                        break
                 }
-        }
 
-        function v(e) {
-            for (var t = 0; t < e.length; t++) {
-                var n = e[t],
-                    i = r[n.id];
-                if (i) {
-                    i.refs++;
-                    for (var o = 0; o < i.parts.length; o++) i.parts[o](n.parts[o]);
-                    for (; o < n.parts.length; o++) i.parts.push(y(n.parts[o]));
-                    i.parts.length > n.parts.length && (i.parts.length = n.parts.length)
-                } else {
-                    var a = [];
-                    for (o = 0; o < n.parts.length; o++) a.push(y(n.parts[o]));
-                    r[n.id] = {
-                        id: n.id,
-                        refs: 1,
-                        parts: a
-                    }
+            },
+
+            /**
+             * Netmask keydown event
+             */
+            netmaskKeydown() {
+
+                let keyCode = event.keyCode || event.which;
+
+                // Return or left on keypad
+                if (keyCode === 8 || keyCode === 37) {
+
+                    // If there is nothing within the selected input go back to the last IP segment
+                    if (this.netmaskCopy && this.netmaskCopy.length === 0 && this.netmaskCopy !== undefined)
+                        this.$refs.ipSegment[3].focus();
+
                 }
-            }
-        }
 
-        function m() {
-            var e = document.createElement("style");
-            return e.type = "text/css", a.appendChild(e), e
-        }
+                setTimeout(this.changed);
 
-        function y(e) {
-            var t, n, i = document.querySelector("style[" + d + '~="' + e.id + '"]');
-            if (i) {
-                if (l) return u;
-                i.parentNode.removeChild(i)
-            }
-            if (f) {
-                var o = p++;
-                i = s || (s = m()), t = C.bind(null, i, o, !1), n = C.bind(null, i, o, !0)
-            } else i = m(), t = x.bind(null, i), n = function () {
-                i.parentNode.removeChild(i)
-            };
-            return t(e),
-                function (i) {
-                    if (i) {
-                        if (i.css === e.css && i.media === e.media && i.sourceMap === e.sourceMap) return;
-                        t(e = i)
-                    } else n()
+            },
+
+            /**
+             * Run on keydown
+             */
+            ipKeydown(event, index) {
+
+                let keyCode = event.keyCode || event.which;
+
+                // Return or left on keypad
+                if (keyCode === 8 || keyCode === 37) {
+
+                    // If there is nothing within the selected input go the the one before it
+                    if (this.ipCopy[index].length === 0 && this.ipCopy[index - 1] !== undefined)
+                        this.$refs.ipSegment[index - 1].focus();
+
                 }
-        }
-        var g, b = (g = [], function (e, t) {
-            return g[e] = t, g.filter(Boolean).join("\n")
-        });
 
-        function C(e, t, n, i) {
-            var o = n ? "" : i.css;
-            if (e.styleSheet) e.styleSheet.cssText = b(t, o);
-            else {
-                var r = document.createTextNode(o),
-                    a = e.childNodes;
-                a[t] && e.removeChild(a[t]), a.length ? e.insertBefore(r, a[t]) : e.appendChild(r)
-            }
-        }
+                // Semi-colon (jump to netmask number)
+                else if (keyCode === 186)
+                    this.$refs.netmaskSegment.focus();
 
-        function x(e, t) {
-            var n = t.css,
-                i = t.media,
-                o = t.sourceMap;
-            if (i && e.setAttribute("media", i), c.ssrId && e.setAttribute(d, t.id), o && (n += "\n/*# sourceURL=" + o.sources[0] + " */", n += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(o)))) + " */"), e.styleSheet) e.styleSheet.cssText = n;
-            else {
-                for (; e.firstChild;) e.removeChild(e.firstChild);
-                e.appendChild(document.createTextNode(n))
-            }
+                setTimeout(() => {
+
+                    // If its a 0 then always move to the next segment, if not work out if we need to move first
+                    if (this.ipCopy[index] === '0')
+                        this.moveToNextIpSegment(index, false);
+                    else
+                        this.moveToNextIpSegment(index);
+
+                    // Update the change
+                    this.changed();
+
+                });
+            },
+
+            /**
+             * Work out if we need to move to the next IP segment or not
+             */
+            moveToNextIpSegment(index, ifOverThree = true) {
+
+                /**
+                 * If there is 3 characters check if there is another segment, if there is focus on it.
+                 */
+                if (ifOverThree) {
+
+                    if (this.ipCopy[index].length >= 3 && this.ipCopy[index + 1] !== undefined)
+                        this.$refs.ipSegment[index + 1].focus();
+                    else if (this.ipCopy[index].length >= 3 && this.ipCopy[index + 1] === undefined)
+                        this.$refs.netmaskSegment.focus();
+
+                } else if (!ifOverThree) {
+
+                    if (this.ipCopy[index + 1] !== undefined)
+                        this.$refs.ipSegment[index + 1].focus();
+                    else if (this.ipCopy[index + 1] === undefined)
+                        this.$refs.netmaskSegment.focus();
+
+                }
+
+            },
+
+            /**
+             * Update the controller with changed IP and netmask addresses
+             */
+            changed(ip = this.ipCopy, netmask = this.netmaskCopy) {
+                let ipLocal = this.arrayToIp(ip);
+                let netmaskLocal = parseInt(netmask);
+                this.onChange(ipLocal, validateNetmask(netmaskLocal), this.validateIP(ip));
+            },
+
+            /**
+             * Copy prop into local copy
+             */
+            copyValue(ip, netmask) {
+
+                if (ip)
+                    this.ipToArray(ip);
+
+                // Update the netmask as long as its a number
+                this.netmaskCopy = netmask;
+
+                // Update if its valid locally
+                this.valid = this.validateIP(this.ipCopy);
+
+                // Report right back with if its valid or not
+                this.changed();
+
+            },
+
+            /**
+             * Convert the IP address string to an array of values
+             */
+            ipToArray(ip) {
+
+                let segments = [];
+                ip.split('.').map(segment => {
+                    if (isNaN(segment) || segment < 0 || segment > 255)
+                        segment = 255;
+                    segments.push(segment);
+                });
+
+                // If something is not valid clear it all
+                if (segments.length !== 4) {
+                    console.error('Not valid, so clearing ip', segments);
+                    this.clearAll();
+                } else
+                    this.ipCopy = segments;
+
+            },
+
+            /**
+             * Convert the array of IP segments back to a string
+             */
+            arrayToIp(ipArray) {
+                return ipArray.join(".");
+            },
+
+            /**
+             * validates the IP address
+             *
+             * @returns Boolean
+             */
+            validateIP(ip) {
+                let ipCheck = this.arrayToIp(ip);
+                return (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipCheck))
+            },
+
+            /**
+             * validates the Netmask address
+             *
+             * @returns Boolean
+             */
+            validateNetmask(netmask) {
+                return netmask >= 0 && netmask <= 32;
+            },
         }
-    }])
-}));
+    }
+</script>
