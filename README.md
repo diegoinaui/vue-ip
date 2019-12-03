@@ -1,5 +1,5 @@
-# Vue IP
-A IP input component built for Vue 2.x
+# Vue IP CIDR
+A IP/CIDRNetmask input component built for Vue 2.x
 
 ![Demo](https://media.giphy.com/media/l49JMe9WDPzJTamwE/giphy.gif)
 
@@ -7,13 +7,13 @@ A IP input component built for Vue 2.x
 
 ### Install
 ````javascript
-$ yarn add vue-ip
+$ yarn add vue-ip-cidr
 ````
 
 
 ### Usage
 ```javascript
-import VueIp from 'VueIp';
+import VueIpCidr from 'VueIpCidr';
 
 new Vue({
     components: {
@@ -22,29 +22,29 @@ new Vue({
     data() {
         return {
             ip: '127.0.0.1', // or null
-            port: '8888', // or null
+            netmask: '32', // or null
         };
     },
     methods: {
         
         /**
-        * Will be called on changes to IP address or port 
+        * Will be called on changes to IP address or netmask 
         */
-        change(ip, port, valid) {
-            console.log(ip, port, valid);
+        change(ip, netmask, valid) {
+            console.log(ip, netmask, valid);
         }
         
     },
-    template: '<vue-ip :ip="ip" :port="port" :on-change="change" theme="material"></vue-ip>'
+    template: '<vue-ip :ip="ip" :netmask="netmask" :on-change="change" theme="material"></vue-ip>'
 })
 ```
 
 
 ### Supports
-* Pasting (with IP or with IP and port)
+* Pasting (with IP or with IP and CIDR Netmask)
 * IP Validation
 * Optional material design theme
-* Optional Port
+* Optional Netmask
 * No sub dependencies
 
 ### Props
@@ -52,7 +52,7 @@ new Vue({
 |-------------	|----------	|---------------------------------------------------- |
 | on-change   	| function 	| Will be called when changes                         |
 | ip          	| string   	| null or ip address '127.0.0.1'      	              |
-| port        	| string   	| null or '8080'                      	              |
+| netmask      	| string   	| null or '32'                      	              |
 | placeholder 	| boolean   | will show a dummy ip address within the placeholder |
 | theme       	| string   	| 'material' (material design themed) 	              |
 
@@ -61,4 +61,4 @@ new Vue({
 [MIT](http://opensource.org/licenses/MIT)
 
 #### Inspired by
-[lakb248](https://github.com/lakb248/vue-ip-input)
+[Peter Ingram](https://github.com/peteringram0/vue-ip)
