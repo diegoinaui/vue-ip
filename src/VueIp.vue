@@ -85,7 +85,7 @@
             .segment
                 &:last-of-type
                     &:after
-                        content '/'
+                        content ':'
 
         .segment
             display inline-block
@@ -107,7 +107,7 @@
 </style>
 
 <script>
-    exnetmask default {
+    export default {
         props: {
             onChange: Function,
             ip: {
@@ -153,8 +153,8 @@
             /**
              * Watch the netmask for changes and update internally
              */
-            netmask(newnetmask) {
-                this.copyValue(this.ip, newnetmask);
+            netmask(newNetmask) {
+                this.copyValue(this.ip, newNetmask);
             }
 
         },
@@ -252,8 +252,8 @@
 
                     this.clearAll();
 
-                    let ipAndnetmask = pasteText.split(":");
-                    this.copyValue(ipAndnetmask[0], false);
+                    let ipAndNetmask = pasteText.split(":");
+                    this.copyValue(ipAndNetmask[0], false);
 
                     // Blur off input
                     this.$refs.ipSegment[0].blur();
@@ -272,8 +272,8 @@
 
                         break;
                     default:
-                        let ipAndnetmask = pasteText.split(":");
-                        this.copyValue(ipAndnetmask[0], ipAndnetmask[1]);
+                        let ipAndNetmask = pasteText.split(":");
+                        this.copyValue(ipAndNetmask[0], ipAndNetmask[1]);
                         this.changed();
 
                         // Blur off input
@@ -285,7 +285,7 @@
             },
 
             /**
-             * netmask keydown event
+             * Netmask keydown event
              */
             netmaskKeydown() {
 
@@ -369,7 +369,8 @@
              */
             changed(ip = this.ipCopy, netmask = this.netmaskCopy) {
                 let ipLocal = this.arrayToIp(ip);
-                this.onChange(ipLocal, this.validateNetmask(netmask), this.validateIP(ip));
+                let netmaskLocal = parseInt(netmask);
+                this.onChange(ipLocal, validateNetmask(netmaskLocal), this.validateIP(ip));
             },
 
             /**
@@ -386,7 +387,7 @@
                 // Update if its valid locally
                 this.valid = this.validateIP(this.ipCopy);
 
-                // Renetmask right back with if its valid or not
+                // Report right back with if its valid or not
                 this.changed();
 
             },
@@ -434,10 +435,9 @@
              *
              * @returns Boolean
              */
-            validateNetMask(netmask) {
-                return parseInt(netmask) >= 0 && parseInt(netmask) <= 32;
+            validateNetmask(netmask) {
+                return netmask >= 0 && netmask <= 32;
             },
-
         }
     }
 </script>
