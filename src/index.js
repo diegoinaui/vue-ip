@@ -1,2 +1,2 @@
-const VueIp = require('./VueIp.vue').default;
-module.exports = VueIp;
+const VueIpCidr = require('./VueIpCidr.vue').default;
+module.exports = VueIpCidr;
