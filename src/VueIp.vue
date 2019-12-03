@@ -4,7 +4,7 @@
             slot
         .segment(v-for="(segment, index) in ipCopy")
             input(type="number", v-model="ipCopy[index]", :placeholder="placeholderPos(index)", maxlength="3", @paste="paste($event)", @keydown="ipKeydown($event, index)", @focus="ipFocus(index)", @blur="blur", ref="ipSegment")
-        input(type="number", v-show="netmaskCopy !== false", v-model="netmaskCopy", :placeholder="((placeholder) ? '8080' : '')", @paste="paste($event)", @focus="netmaskFocus", @keydown="netmaskKeydown", @blur="blur", ref="netmaskSegment").netmask
+        input(type="number", v-show="netmaskCopy !== false", v-model="netmaskCopy", :placeholder="((placeholder) ? '32' : '')", maxlength="2", @paste="paste($event)", @focus="netmaskFocus", @keydown="netmaskKeydown", @blur="blur", ref="netmaskSegment").netmask
 </template>
 
 <style lang="stylus" scoped>
@@ -380,6 +380,12 @@
 
                 if (ip)
                     this.ipToArray(ip);
+
+                if (parseInt(netmask) > 32)
+                    netmask= 32;
+
+                if (parseInt(netmask) < 0)
+                    netmask= 0;
 
                 // Update the netmask as long as its a number
                 this.netmaskCopy = netmask;
