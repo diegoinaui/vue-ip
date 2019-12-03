@@ -85,7 +85,7 @@
             .segment
                 &:last-of-type
                     &:after
-                        content ':'
+                        content '/'
 
         .segment
             display inline-block
@@ -243,7 +243,7 @@
                 let pasteText = event.clipboardData.getData('text/plain');
 
                 // Check if we have a netmask or not
-                let netmaskPos = pasteText.indexOf(':');
+                let netmaskPos = pasteText.indexOf('/');
 
                 // If we have netmasks turned off, remove the netmask and only update the IP value
                 if (this.netmask === false) {
@@ -252,7 +252,7 @@
 
                     this.clearAll();
 
-                    let ipAndNetmask = pasteText.split(":");
+                    let ipAndNetmask = pasteText.split("/");
                     this.copyValue(ipAndNetmask[0], false);
 
                     // Blur off input
@@ -272,7 +272,7 @@
 
                         break;
                     default:
-                        let ipAndNetmask = pasteText.split(":");
+                        let ipAndNetmask = pasteText.split("/");
                         this.copyValue(ipAndNetmask[0], ipAndNetmask[1]);
                         this.changed();
 
