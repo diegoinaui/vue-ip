@@ -1,10 +1,10 @@
 <template lang="pug">
-    span.vue-ip(:class="{'show-port' : portCopy !== false, 'material-theme': theme === 'material', 'active': active, 'valid': valid}")
+    span.vue-ip(:class="{'show-netmask' : netmaskCopy !== false, 'material-theme': theme === 'material', 'active': active, 'valid': valid}")
         .label
             slot
         .segment(v-for="(segment, index) in ipCopy")
             input(type="number", v-model="ipCopy[index]", :placeholder="placeholderPos(index)", maxlength="3", @paste="paste($event)", @keydown="ipKeydown($event, index)", @focus="ipFocus(index)", @blur="blur", ref="ipSegment")
-        input(type="number", v-show="portCopy !== false", v-model="portCopy", :placeholder="((placeholder) ? '8080' : '')", @paste="paste($event)", @focus="portFocus", @keydown="portKeydown", @blur="blur", ref="portSegment").port
+        input(type="number", v-show="netmaskCopy !== false", v-model="netmaskCopy", :placeholder="((placeholder) ? '8080' : '')", @paste="paste($event)", @focus="netmaskFocus", @keydown="netmaskKeydown", @blur="blur", ref="netmaskSegment").netmask
 </template>
 
 <style lang="stylus" scoped>
@@ -81,11 +81,11 @@
         .label
             display none
 
-        &.show-port
+        &.show-netmask
             .segment
                 &:last-of-type
                     &:after
-                        content ':'
+                        content '/'
 
         .segment
             display inline-block
@@ -101,20 +101,20 @@
             outline none
             border none
 
-            &.port
+            &.netmask
                 width 60px
 
 </style>
 
 <script>
-    export default {
+    exnetmask default {
         props: {
             onChange: Function,
             ip: {
                 required: true,
                 type: String
             },
-            port: {
+            netmask: {
                 type: [String, Number, Boolean],
                 default: false
             },
@@ -130,7 +130,7 @@
         data() {
             return {
                 ipCopy: ['', '', '', ''],
-                portCopy: null,
+                netmaskCopy: null,
                 valid: false,
                 active: false
             }
@@ -138,7 +138,7 @@
         beforeMount() {
 
             // Copy the values over
-            this.copyValue(this.ip, this.port);
+            this.copyValue(this.ip, this.netmask);
 
         },
         watch: {
@@ -147,14 +147,14 @@
              * Watch the IP prop for changes and update internally
              */
             ip(newIp) {
-                this.copyValue(newIp, this.port);
+                this.copyValue(newIp, this.netmask);
             },
 
             /**
-             * Watch the port for changes and update internally
+             * Watch the netmask for changes and update internally
              */
-            port(newPort) {
-                this.copyValue(this.ip, newPort);
+            netmask(newnetmask) {
+                this.copyValue(this.ip, newnetmask);
             }
 
         },
@@ -203,12 +203,12 @@
              */
             clearAll() {
                 this.ipCopy = ['', '', '', ''];
-                this.portCopy = null;
+                this.netmaskCopy = null;
                 this.valid = false;
             },
 
             /**
-             * Clicked off the IP or port
+             * Clicked off the IP or netmask
              */
             blur() {
 
@@ -217,14 +217,14 @@
             },
 
             /**
-             * Focus on the port
+             * Focus on the netmask
              */
-            portFocus() {
+            netmaskFocus() {
 
                 this.active = true;
 
                 // Clear it
-                this.portCopy = null;
+                this.netmaskCopy = null;
 
                 // Update the change
                 this.changed();
@@ -232,7 +232,7 @@
             },
 
             /**
-             * Paste in an IP (with or without a port)
+             * Paste in an IP (with or without a netmask)
              */
             paste(event) {
 
@@ -242,18 +242,18 @@
                 // Get clipboard text
                 let pasteText = event.clipboardData.getData('text/plain');
 
-                // Check if we have a port or not
-                let portPos = pasteText.indexOf(':');
+                // Check if we have a netmask or not
+                let netmaskPos = pasteText.indexOf(':');
 
-                // If we have ports turned off, remove the port and only update the IP value
-                if (this.port === false) {
+                // If we have netmasks turned off, remove the netmask and only update the IP value
+                if (this.netmask === false) {
 
-                    console.warn('A IP address with a port has been entered but this module has no port attribute. Please enable it update the port.');
+                    console.warn('A IP address with a netmask has been entered but this module has no netmask attribute. Please enable it update the netmask.');
 
                     this.clearAll();
 
-                    let ipAndPort = pasteText.split(":");
-                    this.copyValue(ipAndPort[0], false);
+                    let ipAndnetmask = pasteText.split(":");
+                    this.copyValue(ipAndnetmask[0], false);
 
                     // Blur off input
                     this.$refs.ipSegment[0].blur();
@@ -261,8 +261,8 @@
                     return;
                 }
 
-                // Based on if we have a port or not
-                switch (portPos) {
+                // Based on if we have a netmask or not
+                switch (netmaskPos) {
                     case -1:
                         this.copyValue(pasteText, null);
                         this.changed();
@@ -272,8 +272,8 @@
 
                         break;
                     default:
-                        let ipAndPort = pasteText.split(":");
-                        this.copyValue(ipAndPort[0], ipAndPort[1]);
+                        let ipAndnetmask = pasteText.split(":");
+                        this.copyValue(ipAndnetmask[0], ipAndnetmask[1]);
                         this.changed();
 
                         // Blur off input
@@ -285,9 +285,9 @@
             },
 
             /**
-             * Port keydown event
+             * netmask keydown event
              */
-            portKeydown() {
+            netmaskKeydown() {
 
                 let keyCode = event.keyCode || event.which;
 
@@ -295,7 +295,7 @@
                 if (keyCode === 8 || keyCode === 37) {
 
                     // If there is nothing within the selected input go back to the last IP segment
-                    if (this.portCopy && this.portCopy.length === 0 && this.portCopy !== undefined)
+                    if (this.netmaskCopy && this.netmaskCopy.length === 0 && this.netmaskCopy !== undefined)
                         this.$refs.ipSegment[3].focus();
 
                 }
@@ -320,9 +320,9 @@
 
                 }
 
-                // Semi-colon (jump to port number)
+                // Semi-colon (jump to netmask number)
                 else if (keyCode === 186)
-                    this.$refs.portSegment.focus();
+                    this.$refs.netmaskSegment.focus();
 
                 setTimeout(() => {
 
@@ -351,42 +351,42 @@
                     if (this.ipCopy[index].length >= 3 && this.ipCopy[index + 1] !== undefined)
                         this.$refs.ipSegment[index + 1].focus();
                     else if (this.ipCopy[index].length >= 3 && this.ipCopy[index + 1] === undefined)
-                        this.$refs.portSegment.focus();
+                        this.$refs.netmaskSegment.focus();
 
                 } else if (!ifOverThree) {
 
                     if (this.ipCopy[index + 1] !== undefined)
                         this.$refs.ipSegment[index + 1].focus();
                     else if (this.ipCopy[index + 1] === undefined)
-                        this.$refs.portSegment.focus();
+                        this.$refs.netmaskSegment.focus();
 
                 }
 
             },
 
             /**
-             * Update the controller with changed IP and port addresses
+             * Update the controller with changed IP and netmask addresses
              */
-            changed(ip = this.ipCopy, port = this.portCopy) {
+            changed(ip = this.ipCopy, netmask = this.netmaskCopy) {
                 let ipLocal = this.arrayToIp(ip);
-                this.onChange(ipLocal, port, this.validateIP(ip));
+                this.onChange(ipLocal, this.validateNetmask(netmask), this.validateIP(ip));
             },
 
             /**
              * Copy prop into local copy
              */
-            copyValue(ip, port) {
+            copyValue(ip, netmask) {
 
                 if (ip)
                     this.ipToArray(ip);
 
-                // Update the port as long as its a number
-                this.portCopy = port;
+                // Update the netmask as long as its a number
+                this.netmaskCopy = netmask;
 
                 // Update if its valid locally
                 this.valid = this.validateIP(this.ipCopy);
 
-                // Report right back with if its valid or not
+                // Renetmask right back with if its valid or not
                 this.changed();
 
             },
@@ -427,7 +427,16 @@
             validateIP(ip) {
                 let ipCheck = this.arrayToIp(ip);
                 return (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipCheck))
-            }
+            },
+
+            /**
+             * validates the Netmask address
+             *
+             * @returns Boolean
+             */
+            validateNetMask(netmask) {
+                return parseInt(netmask) >= 0 && parseInt(netmask) <= 32;
+            },
 
         }
     }
